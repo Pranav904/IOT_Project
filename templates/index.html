@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Sign Detector</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='./styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+          <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="80" height="120" viewBox="0 0 1080 1080" xml:space="preserve">
+              <desc>Created with Fabric.js 5.2.4</desc>
+              <defs>
+              </defs>
+              <g transform="matrix(1 0 0 1 540 540)" id="edc7c337-7236-4c4c-a09d-3348d285ae2d">
+              </g>
+              <g transform="matrix(1 0 0 1 540 540)" id="c3518401-d54d-42fc-badd-b8d11efa04f0">
+              <rect style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; visibility: hidden;" vector-effect="non-scaling-stroke" x="-540" y="-540" rx="0" ry="0" width="1080" height="1080"/>
+              </g>
+              <g transform="matrix(-1 0 0 -1 540.01 540)">
+              <g vector-effect="non-scaling-stroke">
+                  <g transform="matrix(1 0 0 1 0 0)">
+              <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(237,23,31); fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke" transform=" translate(-255.1, -226.44)" d="M 5.472 61.776 L 219.452 432.286 C 226.796 445.03 240.404 452.878 255.01999999999998 452.878 C 269.78 452.878 283.316 445.03 290.73199999999997 432.286 L 504.65199999999993 61.77600000000001 C 508.25199999999995 55.51200000000001 510.1959999999999 48.384000000000015 510.1959999999999 41.18400000000001 C 510.1959999999999 18.42800000000001 491.7659999999999 -0.003999999999990678 469.0159999999999 -0.003999999999990678 L 41.18599999999992 -0.003999999999990678 C 18.43799999999992 -0.003999999999990678 0.005999999999922068 18.428000000000008 0.005999999999922068 41.18000000000001 C 0.005999999999922068 48.452000000000005 1.8779999999999222 55.50800000000001 5.4779999999999225 61.772000000000006 z" stroke-linecap="round"/>
+              </g>
+                  <g transform="matrix(1 0 0 1 -0.04 -3.2)">
+              <polygon style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(254,184,47); fill-rule: nonzero; opacity: 1;" vector-effect="non-scaling-stroke" points="-202.93,-175.72 -0.04,175.71 202.93,-175.72 "/>
+              </g>
+              </g>
+              </g>
+              </svg>
+            <span class="fs-4 p-1">Traffic Sign Detector</span>
+          </a>
+        </header>
+    </div>
+
+    <div class="container col-xxl-8 px-4 py-5">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+          <div class="col-10 col-sm-8 col-lg-6">
+            {% if img %}
+            <img src={{img}} class="figure-img img-fluid rounded shadow mb-5 bg-body-tertiary rounded" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+            {% else %}
+            <div class="card mb-4 rounded-3 shadow-sm">
+              <div class="card-header py-3">
+                <h4 class="my-0 fw-normal">Source Code</h4>
+              </div>
+              <div class="card-body">
+                <h1 class="card-title pricing-card-title">Github</h1>
+                <a href="https://github.com/" class="w-100 btn btn-lg btn-primary">Learn more</a>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+          <div class="col-lg-6">
+            <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Upload your Traffic Sign</h1>
+            <p class="lead">Experience a new level of accuracy in identifying traffic signs with our AI model.</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start fade-in-text">
+                {% if not img or not vimg %}
+                <form action="{{ url_for('upload_file') }}" enctype="multipart/form-data" method="POST">
+                    <div class="input-group">
+                        <input name = "img" type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                        <input class="btn btn-primary" type="submit"/>
+                    </div>
+                </form>
+                {% else %}
+                <p class="lead"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill b-1" viewBox="0 0 16 16">
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                </svg> Traffic Sign identified ! </p>
+                {% endif %}
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="p-5 text-center bg-body-tertiary rounded-3">
+          <h1 class="text-body-emphasis">Your Traffic Sign</h1>
+          <blockquote class="blockquote">
+            <p class="lead font-italic-weight-light">
+                {% if img %}
+                " {{cap}} "
+                {% else %}
+                Loading...
+                {% endif %}
+            </p>
+          </blockquote>
+        </div>
+      </div>
+
+    <div class="container">
+        <footer class="py-3 my-4">
+          <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Designed By : Pranav - Yaswanth - Gopi</a></li>
+          </ul>
+          <p class="text-center text-body-secondary">Developed using Visual Studio Code</p>
+        </footer>
+      </div>
+    
+</body>
+</html>
